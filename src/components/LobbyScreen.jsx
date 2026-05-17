@@ -7,9 +7,9 @@ export default function LobbyScreen() {
   const { role, roomCode, players } = state;
   const isHost = role === 'host';
 
-  const [name, setName] = useState('');
+  const [name, setName] = useState(state.playerName || '');
   const [birthYear, setBirthYear] = useState('');
-  const [joined, setJoined] = useState(false);
+  const [joined, setJoined] = useState(!!state.playerName);
   const [joinError, setJoinError] = useState('');
   const [questionCount, setQuestionCount] = useState(10);
   const allGenres = ['音楽', '映画', 'アニメ', 'ゲーム', '歴史', '流行語'];

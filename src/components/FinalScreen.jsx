@@ -51,6 +51,8 @@ export default function FinalScreen() {
   };
 
   const handleGoHome = () => {
+    socket.disconnect();
+    socket.connect();
     resetGame();
   };
 

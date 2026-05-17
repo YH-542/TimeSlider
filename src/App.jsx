@@ -82,10 +82,52 @@ function GameRouter() {
   }
 }
 
+function HomeButton() {
+  const { state, dispatch } = useGame();
+  
+  if (state.gamePhase === 'home') return null;
+
+  const handleGoHome = () => {
+    if (window.confirm('最初の画面に戻りますか？\n（現在のルームからは退出します）')) {
+      // サーバー側の状態をリセットするため、一度ソケットを切断して再接続する
+      socket.disconnect();
+      socket.connect();
+      dispatch({ type: 'RESET' });
+    }
+  };
+
+  return (
+    <button 
+      onClick={handleGoHome}
+      style={{
+        position: 'absolute',
+        top: '16px',
+        left: '16px',
+        zIndex: 100,
+        background: 'rgba(255, 255, 255, 0.15)',
+        border: '1px solid rgba(255, 255, 255, 0.3)',
+        borderRadius: '8px',
+        color: '#fff',
+        padding: '8px 12px',
+        cursor: 'pointer',
+        fontSize: '0.85rem',
+        fontWeight: 'bold',
+        backdropFilter: 'blur(4px)',
+        transition: 'all 0.2s',
+      }}
+      onMouseOver={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.25)'}
+      onMouseOut={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.15)'}
+    >
+      🏠 トップへ戻る
+    </button>
+  );
+}
+
 export default function App() {
   return (
     <GameProvider>
       <AnimatedBackground />
+      <HomeButton />
       <GameRouter />
       <ErrorToast />
     </GameProvider>
