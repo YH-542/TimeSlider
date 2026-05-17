@@ -17,7 +17,7 @@ const distPath = join(__dirname, '..', 'dist');
 app.use(express.static(distPath));
 
 // その他のリクエストはすべてReactのindex.htmlを返す（ルーティング用）
-app.get('*', (req, res) => {
+app.get('/{*splat}', (req, res) => {
   res.sendFile(join(distPath, 'index.html'));
 });
 
